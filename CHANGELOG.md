@@ -4,6 +4,12 @@ All notable changes to the **flutter_ftp_dtp** package are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.0.1] - 2026-07-11
+
+### Changed
+
+- README: author contact, support, documentation table, publishing checklist, and license details (pub.dev page)
+
 ## [1.0.0] - 2026-07-11
 
 ### Added
@@ -39,4 +45,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   (`order_upsert`, `order_delete`, `tables`) in addition to generic types
   (`entity_upsert`, `entity_delete`, `collection`)
 
+[1.0.1]: https://github.com/bala-404/Flutter_FTP-DTP/releases/tag/v1.0.1
 [1.0.0]: https://github.com/bala-404/Flutter_FTP-DTP/releases/tag/v1.0.0

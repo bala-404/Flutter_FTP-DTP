@@ -1,11 +1,86 @@
 # Flutter FTP & DTP
 
-A Flutter package for **LAN-based local data sharing** between devices on the same Wi-Fi network. Extracted from the [RUPOS](https://github.com) dine-in table management module.
+LAN-based local data sharing for Flutter — **FTP** (one-shot JSON over HTTP) and **DTP** (realtime sync over WebSocket) on the same Wi-Fi network. Extracted from the RUPOS dine-in table management module.
 
 | Pattern | Name | Transport | Use case |
 |---------|------|-----------|----------|
 | **FTP** | File Transfer Pattern | HTTP GET | One-shot JSON export/import (setup sharing) |
 | **DTP** | Data Transfer Pattern | WebSocket | Realtime bidirectional sync (live collaboration) |
+
+---
+
+## Author
+
+**Balamurugan** · AI Architect · Chennai, India
+
+| | |
+|---|---|
+| **Email** | [messagetobalamurugan@gmail.com](mailto:messagetobalamurugan@gmail.com) |
+| **WhatsApp** | [+91 75388 86343](https://wa.me/917538886343) |
+| **Custom solutions** | LAN sync, offline-first POS, multi-device table management, QR pairing flows |
+
+Need custom LAN sync, white-label data sharing, or enterprise Flutter integrations? Connect on [WhatsApp](https://wa.me/917538886343) or [email](mailto:messagetobalamurugan@gmail.com) — I build tailored Flutter solutions.
+
+---
+
+## Support this project
+
+If **flutter_ftp_dtp** saved you time on your app, consider buying me a coffee:
+
+| Method | Details |
+|--------|---------|
+| **UPI (India)** | `balamuruganm2102-1@okaxis` |
+| **Buy Me a Coffee** | [buymeacoffee.com](https://buymeacoffee.com) — search **Balamurugan** or use UPI above |
+
+Your support helps maintain cross-platform LAN sync, WebSocket reliability, and new pairing features.
+
+---
+
+## Documentation
+
+| Guide | Link |
+|-------|------|
+| Installation guide (all platforms) | [INSTALLATION.md](INSTALLATION.md) |
+| Full HTML guide | [doc/index.html](doc/index.html) — open in browser |
+| Changelog | [CHANGELOG.md](CHANGELOG.md) |
+| RUPOS UI reference | [doc/rupos_full_flow_1.html](doc/rupos_full_flow_1.html) |
+| GitHub repository | [bala-404/Flutter_FTP-DTP](https://github.com/bala-404/Flutter_FTP-DTP) |
+
+```bash
+# Open HTML guide (macOS)
+open doc/index.html
+```
+
+---
+
+## Install
+
+### From pub.dev
+
+```yaml
+dependencies:
+  flutter_ftp_dtp: ^1.0.1
+```
+
+### Local path (development)
+
+```yaml
+dependencies:
+  flutter_ftp_dtp:
+    path: ../Flutter_FTP-DTP
+```
+
+```bash
+flutter pub get
+```
+
+```dart
+import 'package:flutter_ftp_dtp/flutter_ftp_dtp.dart';
+```
+
+See [INSTALLATION.md](INSTALLATION.md) for Android cleartext, iOS local network, and camera permissions.
+
+---
 
 ## Features
 
@@ -16,22 +91,13 @@ A Flutter package for **LAN-based local data sharing** between devices on the sa
 - **Pluggable storage** — wire FTP/DTP to your own Hive, SQLite, or in-memory store
 - **Ready-made UI** — optional dialogs for share, import, and live sync flows
 
+---
+
 ## Quick start
 
-### 1. Add dependency
-
-```yaml
-dependencies:
-  flutter_ftp_dtp: ^1.0.0
-```
-
-See [INSTALLATION.md](INSTALLATION.md) for full platform setup.
-
-### 2. File Transfer Pattern (FTP)
+### File Transfer Pattern (FTP)
 
 ```dart
-import 'package:flutter_ftp_dtp/flutter_ftp_dtp.dart';
-
 final shareService = LocalFileShareService(
   label: 'My App Data',
   buildExport: () => {'items': myData.toJson()},
@@ -48,7 +114,7 @@ await showFileShareDialog(context, service: shareService);
 await showFileImportDialog(context, service: shareService);
 ```
 
-### 3. Data Transfer Pattern (DTP)
+### Data Transfer Pattern (DTP)
 
 ```dart
 class MySyncAdapter implements SyncAdapter {
@@ -69,6 +135,8 @@ final engine = RealtimeSyncEngine(MySyncAdapter());
 await showRealtimeSyncDialog(context, engine: engine);
 ```
 
+---
+
 ## Example app
 
 ```bash
@@ -77,7 +145,12 @@ flutter pub get
 flutter run
 ```
 
-The example demonstrates both patterns with a simple shared-notes app.
+The example demonstrates both patterns with a simple shared-notes app. Test with two devices on the same Wi-Fi:
+
+1. Device A → **Share (FTP)** or **Live Sync (DTP)** → Host
+2. Device B → **Import (FTP)** or **Live Sync (DTP)** → Join (scan QR)
+
+---
 
 ## Platform support
 
@@ -91,6 +164,8 @@ The example demonstrates both patterns with a simple shared-notes app.
 | Web      | ❌ | ✅ | ❌ | ✅ |
 
 Hosting requires `dart:io` (native platforms). Web can join as a client but cannot host.
+
+---
 
 ## Architecture
 
@@ -113,29 +188,29 @@ Hosting requires `dart:io` (native platforms). Web can join as a client but cann
     Receiver device(s)            Joining device(s)
 ```
 
+---
+
 ## Protocol
 
 ### FTP QR payload
+
 ```json
 {"v":1,"ip":"192.168.1.25","port":8080,"token":"A9X8M2","label":"My Store","path":"/data.json","mode":"share"}
 ```
 
 ### DTP QR payload
+
 ```json
 {"ip":"192.168.1.25","port":8080,"token":"A9X8M2","path":"/sync","mode":"sync"}
 ```
 
 ### WebSocket message envelope
+
 ```json
 {"t":"entity_upsert","o":"dev_...","id":"item_id","ts":1234567890,"d":{...}}
 ```
 
-## Documentation
-
-- [Installation Guide](INSTALLATION.md)
-- [Changelog](CHANGELOG.md)
-- [HTML Overview](doc/index.html) — interactive documentation
-- [RUPOS Table Management UI Reference](doc/rupos_full_flow_1.html) — original design prototype
+---
 
 ## Origin
 
@@ -146,6 +221,31 @@ This package was extracted from the RUPOS application's Table Management module:
 
 The original Rupos code is **unchanged** — this is a standalone copy for reuse in other Flutter projects.
 
+---
+
+## Publishing checklist (pub.dev)
+
+```bash
+cd Flutter_FTP-DTP
+dart pub publish --dry-run
+dart pub publish
+```
+
+Requires: `LICENSE`, `CHANGELOG.md`, `README.md`, valid `homepage` / `repository` URLs.
+
+---
+
 ## License
 
-MIT — see [LICENSE](LICENSE). Copyright © 2026 CI Global Technologies.
+MIT License — Copyright © 2026 Balamurugan, Chennai, India.
+
+Permission is granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the following conditions:
+
+- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Full license text: [LICENSE](LICENSE) · Repository: [GitHub](https://github.com/bala-404/Flutter_FTP-DTP)
+
+---
+
+Made with ❤️ in Chennai · [Email](mailto:messagetobalamurugan@gmail.com) · [WhatsApp](https://wa.me/917538886343) · UPI: `balamuruganm2102-1@okaxis`
