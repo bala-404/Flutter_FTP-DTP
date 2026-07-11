@@ -1,0 +1,31 @@
+name: flutter_ftp_dtp
+description: >
+  Flutter package for LAN-based File Transfer Pattern (FTP) and Data Transfer
+  Pattern (DTP) — one-shot JSON sharing over HTTP and realtime sync over WebSocket.
+version: 1.0.0
+
+homepage: https://github.com/bala-404/Flutter_FTP-DTP
+repository: https://github.com/bala-404/Flutter_FTP-DTP
+issue_tracker: https://github.com/bala-404/Flutter_FTP-DTP/issues
+
+environment:
+  sdk: '>=3.1.3 <4.0.0'
+  flutter: '>=3.13.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  network_info_plus: ^4.1.0
+  shared_preferences: ^2.0.15
+  web_socket_channel: ^3.0.3
+  pretty_qr_code: ^3.3.0
+  mobile_scanner: ^7.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

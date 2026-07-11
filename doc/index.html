@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flutter FTP &amp; DTP — LAN Sync Patterns</title>
+<style>
+  :root {
+    --blue: #1a56c4;
+    --blue-dark: #12408f;
+    --blue-light: #eaf1fd;
+    --green: #1fa855;
+    --orange: #e8703a;
+    --red: #e2483d;
+    --amber: #e0a72a;
+    --gray-bg: #f4f6f9;
+    --gray-line: #e4e8ef;
+    --text: #1e2733;
+    --text-mute: #7c8798;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--gray-bg); color: var(--text); line-height: 1.6; }
+  .hero { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: #fff; padding: 48px 24px; text-align: center; }
+  .hero h1 { font-size: 2rem; margin-bottom: 8px; }
+  .hero p { opacity: 0.9; max-width: 640px; margin: 0 auto; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 20px; }
+  .card { background: #fff; border: 1px solid var(--gray-line); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { color: var(--blue); font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+  .badge-ftp { background: var(--blue-light); color: var(--blue); }
+  .badge-dtp { background: #eaf7ef; color: var(--green); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--gray-line); padding: 10px 12px; text-align: left; }
+  th { background: var(--gray-bg); font-weight: 600; }
+  pre { background: #1e2733; color: #e8ecf2; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; margin: 12px 0; }
+  code { font-family: 'Cascadia Code', 'Fira Code', monospace; }
+  .flow { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .flow-step { flex: 1; min-width: 140px; background: var(--gray-bg); border-radius: 8px; padding: 14px; text-align: center; font-size: 13px; }
+  .flow-step .num { width: 28px; height: 28px; background: var(--blue); color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 8px; }
+  a { color: var(--blue); }
+  .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; background: var(--blue); color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; }
+  .btn.outline { background: #fff; color: var(--blue); border: 1px solid var(--blue); }
+  footer { text-align: center; padding: 24px; color: var(--text-mute); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Flutter FTP &amp; DTP</h1>
+  <p>LAN-based File Transfer Pattern and Data Transfer Pattern for Flutter — extracted from the RUPOS dine-in table management module.</p>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <h2><span class="badge badge-ftp">FTP</span> File Transfer Pattern</h2>
+    <p>One-shot JSON export/import over HTTP. A host device starts a temporary LAN server; receivers download via QR scan or manual IP + token entry.</p>
+    <div class="flow">
+      <div class="flow-step"><div class="num">1</div>Host builds JSON export</div>
+      <div class="flow-step"><div class="num">2</div>HTTP server starts (port 8080–8120)</div>
+      <div class="flow-step"><div class="num">3</div>QR code displayed</div>
+      <div class="flow-step"><div class="num">4</div>Client GET /data.json?token=XXXX</div>
+      <div class="flow-step"><div class="num">5</div>Import into local storage</div>
+    </div>
+    <pre><code>GET http://192.168.1.25:8080/data.json?token=A9X8M2</code></pre>
+  </div>
+
+  <div class="card">
+    <h2><span class="badge badge-dtp">DTP</span> Data Transfer Pattern</h2>
+    <p>Realtime bidirectional sync over WebSocket. Every device keeps a full local copy. The host relays changes between clients with last-write-wins conflict resolution.</p>
+    <div class="flow">
+      <div class="flow-step"><div class="num">1</div>Host starts WebSocket server</div>
+      <div class="flow-step"><div class="num">2</div>Clients connect via QR</div>
+      <div class="flow-step"><div class="num">3</div>Snapshot sent to new clients</div>
+      <div class="flow-step"><div class="num">4</div>Deltas broadcast on change</div>
+      <div class="flow-step"><div class="num">5</div>Echo suppression + LWW</div>
+    </div>
+    <pre><code>ws://192.168.1.25:8080/sync?token=A9X8M2
+
+{"t":"entity_upsert","o":"dev_abc","id":"note_1","ts":1720000000,"d":{...}}</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>Platform Support</h2>
+    <table>
+      <tr><th>Platform</th><th>FTP Host</th><th>FTP Client</th><th>DTP Host</th><th>DTP Client</th></tr>
+      <tr><td>Android</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>iOS</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>macOS</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Windows</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Linux</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Web</td><td>❌</td><td>✅</td><td>❌</td><td>✅</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Package Structure</h2>
+    <pre><code>Flutter_FTP-DTP/
+├── lib/
+│   ├── flutter_ftp_dtp.dart      # Main export
+│   └── src/
+│       ├── ftp/                  # File Transfer Pattern
+│       ├── dtp/                  # Data Transfer Pattern
+│       ├── common/               # Shared utilities
+│       └── ui/                   # Optional dialogs
+├── example/                      # Demo app (all platforms)
+├── doc/
+│   ├── index.html                # This page
+│   └── rupos_full_flow_1.html    # RUPOS UI reference
+├── README.md
+├── INSTALLATION.md
+└── CHANGELOG.md</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>Quick Integration</h2>
+    <pre><code>// pubspec.yaml
+dependencies:
+  flutter_ftp_dtp: ^1.0.0
+
+// Dart
+import 'package:flutter_ftp_dtp/flutter_ftp_dtp.dart';
+
+final share = LocalFileShareService(
+  buildExport: () => myData.toJson(),
+  importExport: (j) async => myData.import(j),
+);
+
+final sync = RealtimeSyncEngine(MySyncAdapter());
+await showFileShareDialog(context, service: share);
+await showRealtimeSyncDialog(context, engine: sync);</code></pre>
+    <div class="links">
+      <a class="btn" href="../INSTALLATION.md">Installation Guide</a>
+      <a class="btn outline" href="../README.md">README</a>
+      <a class="btn outline" href="rupos_full_flow_1.html">RUPOS UI Reference</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Flutter FTP &amp; DTP v1.0.0 — CI Global Technologies — Extracted from RUPOS Table Management
+</footer>
+
+</body>
+</html>
