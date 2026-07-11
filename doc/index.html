@@ -48,7 +48,7 @@
 
 <div class="hero">
   <h1>Flutter FTP &amp; DTP</h1>
-  <p>LAN-based File Transfer Pattern and Data Transfer Pattern for Flutter — extracted from the RUPOS dine-in table management module.</p>
+  <p>General-purpose LAN-based File Transfer Pattern and Data Transfer Pattern for Flutter apps.</p>
 </div>
 
 <div class="container">
@@ -106,8 +106,7 @@
 │       └── ui/                   # Optional dialogs
 ├── example/                      # Demo app (all platforms)
 ├── doc/
-│   ├── index.html                # This page
-│   └── rupos_full_flow_1.html    # RUPOS UI reference
+│   └── index.html                # This page
 ├── README.md
 ├── INSTALLATION.md
 └── CHANGELOG.md</code></pre>
@@ -117,7 +116,7 @@
     <h2>Quick Integration</h2>
     <pre><code>// pubspec.yaml
 dependencies:
-  flutter_ftp_dtp: ^1.0.0
+  flutter_ftp_dtp: ^1.0.2
 
 // Dart
 import 'package:flutter_ftp_dtp/flutter_ftp_dtp.dart';
@@ -131,16 +130,17 @@ final sync = RealtimeSyncEngine(MySyncAdapter());
 await showFileShareDialog(context, service: share);
 await showRealtimeSyncDialog(context, engine: sync);</code></pre>
     <div class="links">
-      <a class="btn" href="../INSTALLATION.md">Installation Guide</a>
-      <a class="btn outline" href="../README.md">README</a>
-      <a class="btn outline" href="rupos_full_flow_1.html">RUPOS UI Reference</a>
+      <a class="btn" href="https://github.com/bala-404/Flutter_FTP-DTP/blob/main/INSTALLATION.md">Installation Guide</a>
+      <a class="btn outline" href="https://github.com/bala-404/Flutter_FTP-DTP/blob/main/README.md">README</a>
+      <a class="btn outline" href="https://github.com/bala-404/Flutter_FTP-DTP/blob/main/LICENSE">License (MIT)</a>
+      <a class="btn outline" href="https://pub.dev/packages/flutter_ftp_dtp">pub.dev</a>
     </div>
   </div>
 
 </div>
 
 <footer>
-  Flutter FTP &amp; DTP v1.0.0 — CI Global Technologies — Extracted from RUPOS Table Management
+  Flutter FTP &amp; DTP v1.0.2 — MIT License — Copyright © 2026 Balamurugan, Chennai, India
 </footer>
 
 </body>

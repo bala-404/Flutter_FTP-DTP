@@ -138,16 +138,16 @@ class LocalFileShareService {
 
   ImportSummary previewImport(Map<String, dynamic> json) {
     final items = (json['items'] as List?)?.length ??
-        (json['tables'] as List?)?.length ??
-        (json['zones'] as List?)?.length ??
+        (json['records'] as List?)?.length ??
+        (json['entities'] as List?)?.length ??
         0;
     return ImportSummary(
       itemCount: items,
-      label: json['label']?.toString() ?? json['store']?.toString() ?? '',
+      label: json['label']?.toString() ?? json['name']?.toString() ?? '',
       extra: Map<String, dynamic>.from(json)
         ..remove('items')
-        ..remove('tables')
-        ..remove('zones'),
+        ..remove('records')
+        ..remove('entities'),
     );
   }
 

@@ -1,6 +1,6 @@
 # Flutter FTP & DTP
 
-LAN-based local data sharing for Flutter — **FTP** (one-shot JSON over HTTP) and **DTP** (realtime sync over WebSocket) on the same Wi-Fi network. Extracted from the RUPOS dine-in table management module.
+General-purpose **LAN-based local data sharing** for Flutter — **FTP** (one-shot JSON over HTTP) and **DTP** (realtime sync over WebSocket) on the same Wi-Fi network.
 
 | Pattern | Name | Transport | Use case |
 |---------|------|-----------|----------|
@@ -17,9 +17,9 @@ LAN-based local data sharing for Flutter — **FTP** (one-shot JSON over HTTP) a
 |---|---|
 | **Email** | [messagetobalamurugan@gmail.com](mailto:messagetobalamurugan@gmail.com) |
 | **WhatsApp** | [+91 75388 86343](https://wa.me/917538886343) |
-| **Custom solutions** | LAN sync, offline-first POS, multi-device table management, QR pairing flows |
+| **Custom solutions** | LAN sync, offline-first apps, multi-device collaboration, QR pairing flows |
 
-Need custom LAN sync, white-label data sharing, or enterprise Flutter integrations? Connect on [WhatsApp](https://wa.me/917538886343) or [email](mailto:messagetobalamurugan@gmail.com) — I build tailored Flutter solutions.
+Need custom LAN sync, white-label data sharing, or enterprise Flutter integrations? Connect on [WhatsApp](https://wa.me/917538886343) or [email](mailto:messagetobalamurugan@gmail.com).
 
 ---
 
@@ -41,15 +41,16 @@ Your support helps maintain cross-platform LAN sync, WebSocket reliability, and 
 | Guide | Link |
 |-------|------|
 | Installation guide (all platforms) | [INSTALLATION.md](INSTALLATION.md) |
-| Full HTML guide | [doc/index.html](doc/index.html) — open in browser |
+| Full HTML guide (live) | [bala-404.github.io/Flutter_FTP-DTP](https://bala-404.github.io/Flutter_FTP-DTP/) |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |
-| RUPOS UI reference | [doc/rupos_full_flow_1.html](doc/rupos_full_flow_1.html) |
 | GitHub repository | [bala-404/Flutter_FTP-DTP](https://github.com/bala-404/Flutter_FTP-DTP) |
 
 ```bash
-# Open HTML guide (macOS)
-open doc/index.html
+# Open live HTML guide in browser
+open https://bala-404.github.io/Flutter_FTP-DTP/
 ```
+
+> **Note:** GitHub shows `doc/index.html` as source code in the repo browser. Use the [live docs site](https://bala-404.github.io/Flutter_FTP-DTP/) above to view the rendered page.
 
 ---
 
@@ -59,7 +60,7 @@ open doc/index.html
 
 ```yaml
 dependencies:
-  flutter_ftp_dtp: ^1.0.1
+  flutter_ftp_dtp: ^1.0.3
 ```
 
 ### Local path (development)
@@ -195,7 +196,7 @@ Hosting requires `dart:io` (native platforms). Web can join as a client but cann
 ### FTP QR payload
 
 ```json
-{"v":1,"ip":"192.168.1.25","port":8080,"token":"A9X8M2","label":"My Store","path":"/data.json","mode":"share"}
+{"v":1,"ip":"192.168.1.25","port":8080,"token":"A9X8M2","label":"My Data","path":"/data.json","mode":"share"}
 ```
 
 ### DTP QR payload
@@ -210,16 +211,7 @@ Hosting requires `dart:io` (native platforms). Web can join as a client but cann
 {"t":"entity_upsert","o":"dev_...","id":"item_id","ts":1234567890,"d":{...}}
 ```
 
----
-
-## Origin
-
-This package was extracted from the RUPOS application's Table Management module:
-
-- `TableShareService` → `LocalFileShareService` (FTP)
-- `DineSyncService` → `RealtimeSyncEngine` (DTP)
-
-The original Rupos code is **unchanged** — this is a standalone copy for reuse in other Flutter projects.
+Generic message types: `snapshot`, `entity_upsert`, `entity_delete`, `collection`, `ping`, `pong`.
 
 ---
 
@@ -237,7 +229,9 @@ Requires: `LICENSE`, `CHANGELOG.md`, `README.md`, valid `homepage` / `repository
 
 ## License
 
-MIT License — Copyright © 2026 Balamurugan, Chennai, India.
+**MIT License** — Copyright © 2026 Balamurugan, Chennai, India.
+
+You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of this software, subject to the conditions in the [LICENSE](LICENSE) file.
 
 Permission is granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the following conditions:
 

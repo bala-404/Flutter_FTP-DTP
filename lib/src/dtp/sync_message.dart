@@ -10,11 +10,6 @@ class SyncType {
   static const String collection = 'collection';
   static const String ping = 'ping';
   static const String pong = 'pong';
-
-  // Rupos dine-in aliases (backward compatible wire format).
-  static const String orderUpsert = 'order_upsert';
-  static const String orderDelete = 'order_delete';
-  static const String tables = 'tables';
 }
 
 /// One envelope on the wire.

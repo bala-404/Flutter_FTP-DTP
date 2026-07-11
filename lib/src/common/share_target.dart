@@ -33,7 +33,7 @@ class ShareTarget {
       ip: ip,
       port: port,
       token: token,
-      label: map['label']?.toString() ?? map['store']?.toString() ?? '',
+      label: map['label']?.toString() ?? map['name']?.toString() ?? '',
       path: map['path']?.toString() ?? '/data.json',
       mode: map['mode']?.toString() ?? 'share',
     );
